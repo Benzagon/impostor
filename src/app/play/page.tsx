@@ -2,12 +2,13 @@
 import { palabras } from "@/lib/palabras";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import GameCard from "./GameCard";
 
 const Play = () => {
     const searchParams = useSearchParams();
     const playersParam = searchParams.get("players");
 
-    const players = playersParam ? Number(playersParam) : null;
+    const players = Number(playersParam);
 
     const isPlayersValid = playersParam && Number(playersParam) >= 2 && Number(playersParam) <= 7;
 
@@ -21,6 +22,8 @@ const Play = () => {
         )
     }
     const [palabra, setPalabra] = useState<string | null>(null);
+    const [currPlayer, setCurrPlayer] = useState<number>(1); 
+    const [impostor, setImpostor] = useState(Math.floor(Math.random() * players))
 
     useEffect(() => {
         const random =
@@ -28,17 +31,26 @@ const Play = () => {
         setPalabra(random);
     }, []);
 
-  if (!palabra) return null;
+    if (!palabra) return null;
+
+    const playerArr = Array.from({ length: players }, (_, index) => index + 1);
+
+    const nextPlayer = () => {
+        setCurrPlayer(curr => curr += 1);
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center text-white">
-            <h1 className="text-2xl font-bold">
-            Jugadores: {players}
-            </h1>
-            <h1 className="text-2xl font-bold">
-             {palabra}
-            </h1>
-            
+            {playerArr.map((val, index) => (
+                <GameCard
+                    curr={currPlayer}
+                    nextPlayer={nextPlayer}
+                    playerNumber={val}
+                    isImpostor={val === impostor}
+                    palabra={palabra}
+                    key={index}
+                />
+            ))}
         </div>
     );
 };
