@@ -3,6 +3,7 @@ import { palabras } from "@/lib/palabras";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import GameCard from "./GameCard";
+import Jugando from "./Jugando";
 
 const Play = () => {
     const searchParams = useSearchParams();
@@ -23,13 +24,16 @@ const Play = () => {
     }
     const [palabra, setPalabra] = useState<string | null>(null);
     const [currPlayer, setCurrPlayer] = useState<number>(1); 
-    const [impostor, setImpostor] = useState(Math.floor(Math.random() * players))
+    const [impostor, setImpostor] = useState<number>(0);
+    const [startingPlayer, setStartingPlayer] = useState<number>(0);
 
     useEffect(() => {
         const random =
         palabras[Math.floor(Math.random() * palabras.length)];
         setPalabra(random);
-    }, []);
+        setImpostor(Math.floor(Math.random() * players + 1));
+        setStartingPlayer(Math.floor(Math.random() * players + 1));
+    }, [setPalabra, setImpostor, setStartingPlayer]);
 
     if (!palabra) return null;
 
@@ -51,6 +55,11 @@ const Play = () => {
                     key={index}
                 />
             ))}
+            {currPlayer > players && 
+                <Jugando 
+                    startingPlayer={startingPlayer}
+                />
+            }
         </div>
     );
 };
