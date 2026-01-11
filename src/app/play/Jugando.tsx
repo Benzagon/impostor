@@ -1,9 +1,5 @@
 "use client";
-
-import { useRouter } from "next/navigation";
-
 const Jugando = ({startingPlayer}: {startingPlayer: number}) => {
-    const router = useRouter();
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-900 text-white px-6 text-center w-full">
@@ -20,7 +16,7 @@ const Jugando = ({startingPlayer}: {startingPlayer: number}) => {
             </h2>
 
             <button
-            onClick={() => router.replace("/")}
+            onClick={() => location.reload()}
             className="
                 text-sm text-zinc-400
                 hover:text-white
