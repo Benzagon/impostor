@@ -48,18 +48,17 @@ const GameCard = ({
     <div
         className={`
         min-h-screen flex flex-col items-center justify-center
-        px-6 text-center text-white w-full
-        ${isImpostor ? "bg-red-700" : "bg-emerald-700"}
+        px-6 text-center text-white w-full bg-zinc-900
         `}
     >
         {isImpostor ? (
-        <h1 className="text-4xl font-extrabold mb-6">
+        <h1 className="text-4xl font-extrabold mb-6 text-red-500">
             IMPOSTOR
         </h1>
         ) : (
         <h1 className="text-3xl font-bold mb-6">
             La palabra es
-            <span className="block text-4xl mt-2 underline underline-offset-2">
+            <span className={`block text-4xl mt-2 underline underline-offset-2 ${isImpostor ? "text-red-500" : "text-green-500"}`}>
             {palabra.toLocaleUpperCase()}
             </span>
         </h1>
